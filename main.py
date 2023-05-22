@@ -15,8 +15,8 @@ if __name__ == "__main__":
     match = match_manager.MatchManager(
         engine_1_path="engine_1/engine.exe",
         engine_2_path="engine_2/engine.exe",
-        starting_time=60000,
-        increment=1000,
+        starting_time=10000,
+        increment=500,
         win=win)
 
     print("----------------------- Starting Match -------------------------")

@@ -150,11 +150,8 @@ class MatchManager:
             sys.stdout.write("Engine 2 readyok.\n")
 
             # ----------------------------- LAST BEFORE LOOP -------------------------------
-            # before the match is played, show the starting board for a while
-            engine_info = f"Engine 1: White. Engine 2: Black"
-            if not engine_1_is_white:
-                engine_info = f"Engine 1: Black. Engine 2: White"
-            # self.gui.display_board(game_board, white_time, black_time, board.STATE_ONGOING, engine_info)
+            self.gui.display_board(game_board, white_time, black_time, board.STATE_ONGOING, engine_1_is_white,
+                                   self.engine_1_wins, self.engine_2_wins, self.draws)
 
             # ----------------------------- PLAY LOOP -------------------------------
             # now that the engines are ready, start the loop
@@ -231,7 +228,8 @@ class MatchManager:
                 game_state = game_board.get_game_state()
 
                 # update the gui
-                # self.gui.display_board(game_board, white_time, black_time, game_state, engine_info)
+                self.gui.display_board(game_board, white_time, black_time, game_state, engine_1_is_white,
+                                       self.engine_1_wins, self.engine_2_wins, self.draws)
 
                 # end the game loop if the game is over
                 if not game_state == board.STATE_ONGOING:
