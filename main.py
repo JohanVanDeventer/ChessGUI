@@ -16,7 +16,7 @@ if __name__ == "__main__":
         engine_1_path="engine_1/engine.exe",
         engine_2_path="engine_2/engine.exe",
         starting_time=10000,
-        increment=500,
+        increment=100,
         win=win)
 
     print("----------------------- Starting Match -------------------------")

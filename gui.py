@@ -110,7 +110,8 @@ class GUI:
 
     # refresh the displayed board to show the new board
     def display_board(self, board_to_show: board.Board, white_time, black_time, game_state, engine_1_is_white,
-                      eng_1_wins, eng_2_wins, draws):
+                      eng_1_wins, eng_2_wins, draws,
+                      opening_name):
 
         # fill in the background to be blank
         self.win.fill((255, 255, 255))
@@ -162,6 +163,10 @@ class GUI:
         self.win.blit(img_eng_2_wins, (TEXT_START_X, TEXT_START_Y + (TEXT_Y_OFFSET * 3)))
         img_draws = self.font.render(f'Draws: {draws}', False, (0, 0, 0)).convert_alpha()
         self.win.blit(img_draws, (TEXT_START_X, TEXT_START_Y + (TEXT_Y_OFFSET * 4)))
+
+        # display the opening name
+        opening_img = self.font.render(f'Opening: {opening_name}', False, (0, 0, 0)).convert_alpha()
+        self.win.blit(opening_img, (TEXT_START_X, TEXT_START_Y + (TEXT_Y_OFFSET * 6)))
 
         # finally refresh the screen
         pygame.display.update()

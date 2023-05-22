@@ -36,7 +36,7 @@ class MatchManager:
     def start_match(self):
 
         # loop over each new position in the opening book
-        for opening_sequence in opening_book.opening_book:
+        for opening_sequence_tuple in opening_book.opening_book:
 
             # we play each engine from both white and black in each position
             for engine_1_side in range(2):
@@ -45,13 +45,13 @@ class MatchManager:
                     engine_1_is_white = False
 
                 sys.stdout.write("********** Stating New Game **********\n")
-                print(f"Opening Sequence: {opening_sequence}")
+                print(f"Opening Sequence: {opening_sequence_tuple}")
                 if engine_1_is_white:
                     sys.stdout.write("Engine 1 is white. Engine 2 is black.")
                 else:
                     sys.stdout.write("Engine 2 is white. Engine 1 is black.")
 
-                self.start_game(opening_sequence, engine_1_is_white)
+                self.start_game(opening_sequence_tuple, engine_1_is_white)
 
         # when the match is over, save the results if at least 1 game was played
         if self.games_finished > 0:
@@ -64,7 +64,7 @@ class MatchManager:
                 file.write(result)
 
     # start a new game between the engines
-    def start_game(self, opening_sequence, engine_1_is_white):
+    def start_game(self, opening_sequence_tuple, engine_1_is_white):
 
         # ----------------------------- START ENGINES -------------------------------
         # start each engine from fresh
@@ -73,6 +73,9 @@ class MatchManager:
         sys.stdout.write(" Started Engines. \n")
 
         try:
+
+            # ----------------------------- CLEAN OPENING SEQUENCE -------------------------------
+            opening_sequence, opening_name = opening_sequence_tuple
 
             # ----------------------------- BOARD VARIABLES -------------------------------
             # set up a new board with the starting position
@@ -151,7 +154,7 @@ class MatchManager:
 
             # ----------------------------- LAST BEFORE LOOP -------------------------------
             self.gui.display_board(game_board, white_time, black_time, board.STATE_ONGOING, engine_1_is_white,
-                                   self.engine_1_wins, self.engine_2_wins, self.draws)
+                                   self.engine_1_wins, self.engine_2_wins, self.draws, opening_name)
 
             # ----------------------------- PLAY LOOP -------------------------------
             # now that the engines are ready, start the loop
@@ -229,7 +232,7 @@ class MatchManager:
 
                 # update the gui
                 self.gui.display_board(game_board, white_time, black_time, game_state, engine_1_is_white,
-                                       self.engine_1_wins, self.engine_2_wins, self.draws)
+                                       self.engine_1_wins, self.engine_2_wins, self.draws, opening_name)
 
                 # end the game loop if the game is over
                 if not game_state == board.STATE_ONGOING:
