@@ -2,6 +2,8 @@ import sys
 from datetime import datetime
 import time
 
+import pygame.event
+
 import engine
 import board
 import gui
@@ -231,6 +233,8 @@ class MatchManager:
                 game_state = game_board.get_game_state()
 
                 # update the gui
+                # call pygame.event.get() seems to reduce "not responding" issues
+                _ = pygame.event.get()
                 self.gui.display_board(game_board, white_time, black_time, game_state, engine_1_is_white,
                                        self.engine_1_wins, self.engine_2_wins, self.draws, opening_name)
 
