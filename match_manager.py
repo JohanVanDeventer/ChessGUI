@@ -224,7 +224,6 @@ class MatchManager:
 
                 # append the move to the position command for the next turn
                 position_command += f' {best_move_uci}'
-                # print(f"Best move {best_move_uci}")
 
                 # play the move on the board
                 game_board.play_move(best_move_uci)
@@ -233,7 +232,7 @@ class MatchManager:
                 game_state = game_board.get_game_state()
 
                 # update the gui
-                # call pygame.event.get() seems to reduce "not responding" issues
+                # calling pygame.event.get() seems to reduce "not responding" issues
                 _ = pygame.event.get()
                 self.gui.display_board(game_board, white_time, black_time, game_state, engine_1_is_white,
                                        self.engine_1_wins, self.engine_2_wins, self.draws, opening_name)
