@@ -37,29 +37,43 @@ class MatchManager:
     # start the match and continue with each game until the end
     def start_match(self):
 
+        # set a flag for whether the match was terminated early
+        match_terminated = False
+
         # loop over each new position in the opening book
         for opening_sequence_tuple in opening_book.opening_book:
+            if not match_terminated:
 
-            # we play each engine from both white and black in each position
-            for engine_1_side in range(2):
-                engine_1_is_white = True
-                if engine_1_side == 1:
-                    engine_1_is_white = False
+                # we play each engine from both white and black in each position
+                for engine_1_side in range(2):
+                    if not match_terminated:
 
-                sys.stdout.write("********** Stating New Game **********\n")
-                print(f"Opening Sequence: {opening_sequence_tuple}")
-                if engine_1_is_white:
-                    sys.stdout.write("Engine 1 is white. Engine 2 is black.")
-                else:
-                    sys.stdout.write("Engine 2 is white. Engine 1 is black.")
+                        engine_1_is_white = True
+                        if engine_1_side == 1:
+                            engine_1_is_white = False
 
-                self.start_game(opening_sequence_tuple, engine_1_is_white)
+                        sys.stdout.write("********** Stating New Game **********\n")
+                        print(f"Opening Sequence: {opening_sequence_tuple}")
+                        if engine_1_is_white:
+                            sys.stdout.write("Engine 1 is white. Engine 2 is black.")
+                        else:
+                            sys.stdout.write("Engine 2 is white. Engine 1 is black.")
 
-        # when the match is over, save the results if at least 1 game was played
+                        match_terminated = self.start_game(opening_sequence_tuple, engine_1_is_white)
+
+        # when the match is over or terminated, save the results if at least 1 game was played
         if self.games_finished > 0:
+
             match_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            result = f'{match_time}: Engine 1 won {self.engine_1_wins} times. Engine 2 won {self.engine_2_wins} times. ' \
-                     f'There were {self.draws} draws. Time ms: {self.starting_time}. Increment ms: {self.increment}.\n'
+            engine_1_score = round(((self.engine_1_wins + (self.draws/2))/self.games_finished * 100), 2)
+            engine_2_score = round(((self.engine_2_wins + (self.draws / 2)) / self.games_finished * 100), 2)
+
+            result = f'{match_time}: ' \
+                f'Engine 1 Score: {engine_1_score}% ({self.engine_1_wins} wins). ' \
+                f'Engine 2 Score: {engine_2_score}% ({self.engine_2_wins} wins). ' \
+                f'Draws: {self.draws}. ' \
+                f'Time ms: {self.starting_time}. ' \
+                f'Increment ms: {self.increment}.\n'
 
             with open('results.txt', 'a') as file:
                 # Write the text to the file
@@ -114,8 +128,8 @@ class MatchManager:
             if engine_1_output == "uciok":
                 engine_1_ok = True
             if not engine_1_ok:
-                print("Engine 1 did not respond to uci. Aborting the game.")
-                return
+                print("Engine 1 did not respond to uci. Aborting the match.")
+                return True
             sys.stdout.write("Engine 1 uciok. ")
 
             engine_2.send_input("uci\n")
@@ -126,8 +140,8 @@ class MatchManager:
             if engine_2_output == "uciok":
                 engine_2_ok = True
             if not engine_2_ok:
-                print("Engine 2 did not respond to uci. Aborting the game.")
-                return
+                print("Engine 2 did not respond to uci. Aborting the match.")
+                return True
             sys.stdout.write("Engine 2 uciok. ")
 
             # ----------------------------- UCI NEW GAME -------------------------------
@@ -139,8 +153,8 @@ class MatchManager:
             if engine_1_output == "readyok":
                 engine_1_ok = True
             if not engine_1_ok:
-                print("Engine 1 did not respond to ucinewgame and isready. Aborting the game.")
-                return
+                print("Engine 1 did not respond to ucinewgame and isready. Aborting the match.")
+                return True
             sys.stdout.write("Engine 1 readyok. ")
 
             engine_2.send_input("ucinewgame\n", is_flush=False)
@@ -150,8 +164,8 @@ class MatchManager:
             if engine_2_output == "readyok":
                 engine_2_ok = True
             if not engine_2_ok:
-                print("Engine 2 did not respond to ucinewgame and isready. Aborting the game.")
-                return
+                print("Engine 2 did not respond to ucinewgame and isready. Aborting the match.")
+                return True
             sys.stdout.write("Engine 2 readyok.\n")
 
             # ----------------------------- LAST BEFORE LOOP -------------------------------
@@ -204,7 +218,7 @@ class MatchManager:
                     else:
                         self.engine_1_wins += 1
                     self.games_finished += 1
-                    return
+                    return False
 
                 if black_time <= 0:
                     print("Game over. Black lost on time")
@@ -213,7 +227,7 @@ class MatchManager:
                     else:
                         self.engine_2_wins += 1
                     self.games_finished += 1
-                    return
+                    return False
 
                 # clean the next best move to one uci move, example: "bestmove e7e8q"
                 best_move_uci = best_move_output.strip()
@@ -231,9 +245,12 @@ class MatchManager:
                 # check the game state, and stop the loop if the game is not ongoing
                 game_state = game_board.get_game_state()
 
+                # handle user events: we stop the match on exit of the window
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        return True
+
                 # update the gui
-                # calling pygame.event.get() seems to reduce "not responding" issues
-                _ = pygame.event.get()
                 self.gui.display_board(game_board, white_time, black_time, game_state, engine_1_is_white,
                                        self.engine_1_wins, self.engine_2_wins, self.draws, opening_name)
 
@@ -257,7 +274,7 @@ class MatchManager:
                         self.draws += 1
 
                     self.games_finished += 1
-                    return
+                    return False
 
                 # finally, change the side to move
                 is_white_turn = not is_white_turn

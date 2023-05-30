@@ -161,7 +161,7 @@ class GUI:
         self.win.blit(img_eng_1_wins, (TEXT_START_X, TEXT_START_Y + (TEXT_Y_OFFSET * 2)))
         img_eng_2_wins = self.font.render(f'Engine 2 Wins: {eng_2_wins}', False, (0, 0, 0)).convert_alpha()
         self.win.blit(img_eng_2_wins, (TEXT_START_X, TEXT_START_Y + (TEXT_Y_OFFSET * 3)))
-        img_draws = self.font.render(f'Draws: {draws}', False, (0, 0, 0)).convert_alpha()
+        img_draws = self.font.render(f'Draws:               {draws}', False, (0, 0, 0)).convert_alpha()
         self.win.blit(img_draws, (TEXT_START_X, TEXT_START_Y + (TEXT_Y_OFFSET * 4)))
 
         # display the opening name
