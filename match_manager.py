@@ -239,6 +239,16 @@ class MatchManager:
                 # append the move to the position command for the next turn
                 position_command += f' {best_move_uci}'
 
+                # error catching: if the uci best move is not valid
+                if len(best_move_uci) < 4:
+                    error_message = "\nERROR: UCI BEST MOVE IS INVALID.\n"
+                    error_message += f'Position Command: {position_command}\n'
+                    error_message += f'Go Command: {go_command}\n'
+                    with open('results.txt', 'a') as file:
+                        # Write the text to the file
+                        file.write(error_message)
+                    return True
+
                 # play the move on the board
                 game_board.play_move(best_move_uci)
 
