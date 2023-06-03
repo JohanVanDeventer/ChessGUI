@@ -285,7 +285,7 @@ class MatchManager:
                         for i, move_str in enumerate(split_pos_command):
                             if i > 2:
                                 cleaned_pos_command += '"' + move_str + '",'
-                        position_details += "<<<MOVES>>> " + cleaned_pos_command
+                        position_details += "<<<MOVES>>> " + cleaned_pos_command + "\n"
 
                         with open('games_played.txt', 'a') as file:
                             # write the text to the file
