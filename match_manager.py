@@ -10,6 +10,7 @@ import gui
 import opening_book
 
 
+# ----------------------------------- INIT ------------------------------------
 # manages a match (multiple games) between two engines on a chess board
 class MatchManager:
     def __init__(self,
@@ -38,6 +39,7 @@ class MatchManager:
         self.draws = 0
         self.games_finished = 0
 
+    # ----------------------------------- START MATCH ------------------------------------
     # start the match and continue with each game until the end
     def start_match(self):
 
@@ -83,6 +85,7 @@ class MatchManager:
                 # write the text to the file
                 file.write(result)
 
+    # ----------------------------------- START GAME ------------------------------------
     # start a new game between the engines
     def start_game(self, opening_sequence_tuple, engine_1_is_white):
 
@@ -95,11 +98,18 @@ class MatchManager:
         try:
 
             # ----------------------------- CLEAN OPENING SEQUENCE -------------------------------
-            opening_sequence, opening_name = opening_sequence_tuple
+            opening_sequence, opening_name, fen = opening_sequence_tuple
 
             # ----------------------------- BOARD VARIABLES -------------------------------
             # set up a new board with the starting position
-            game_board = board.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+            is_white_turn = True
+            if fen == "startpos":
+                game_board = board.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+            else:
+                game_board = board.Board(fen=fen)
+                fen_parts = fen.split(sep=" ")
+                if fen_parts[1] == "b":
+                    is_white_turn = False
 
             # ----------------------------- GAME VARIABLES -------------------------------
             white_time = self.starting_time
@@ -108,11 +118,12 @@ class MatchManager:
             white_inc = self.increment
             black_inc = self.increment
 
-            is_white_turn = True
-
             # ----------------------------- POSITION COMMAND SETUP -------------------------------
             # list of commands to send on each "position" command
-            position_command = f"position startpos moves"
+            if fen == "startpos":
+                position_command = f"position startpos moves"
+            else:
+                position_command = f"position fen {fen} moves"
 
             # append the moves from the opening book to the position command
             # also switch the side to play on every move added
@@ -244,7 +255,7 @@ class MatchManager:
                 position_command += f' {best_move_uci}'
 
                 # error catching: if the uci best move is not valid
-                if len(best_move_uci) < 4:
+                if len(best_move_uci) < 4 or len(best_move_uci) > 5:
                     error_message = "\nERROR: UCI BEST MOVE IS INVALID.\n"
                     error_message += f'Position Command: {position_command}\n'
                     error_message += f'Go Command: {go_command}\n'
