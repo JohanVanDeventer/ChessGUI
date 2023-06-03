@@ -9,3 +9,5 @@
 /.idea/.gitignore
 /engine_versions/
 /results_backup/
+/error_logs.txt
+/games_played.txt
