@@ -15,7 +15,8 @@ class MatchManager:
     def __init__(self,
                  engine_1_path, engine_2_path,
                  starting_time, increment,
-                 win):
+                 win,
+                 does_log_final_positions):
 
         # set up the engine paths
         self.engine_1_path = engine_1_path
@@ -27,6 +28,9 @@ class MatchManager:
 
         # set up the gui used to display the board
         self.gui = gui.GUI(win)
+
+        # save the user settings
+        self.does_log_final_positions = does_log_final_positions
 
         # set up the match counters
         self.engine_1_wins = 0
@@ -76,7 +80,7 @@ class MatchManager:
                 f'Increment ms: {self.increment}.\n'
 
             with open('results.txt', 'a') as file:
-                # Write the text to the file
+                # write the text to the file
                 file.write(result)
 
     # start a new game between the engines
@@ -266,6 +270,28 @@ class MatchManager:
 
                 # end the game loop if the game is over
                 if not game_state == board.STATE_ONGOING:
+
+                    # if on, we save the final position details to a text file
+                    if self.does_log_final_positions:
+                        game_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        final_fen = game_board.board.fen()
+
+                        position_details = "---------------------------------------------------\n" +\
+                            "<<<TIME>>> " + game_time + ".\n" +\
+                            "<<<FEN>>> " + final_fen + ".\n"
+
+                        split_pos_command = position_command.split(sep=" ")
+                        cleaned_pos_command = ""
+                        for i, move_str in enumerate(split_pos_command):
+                            if i > 2:
+                                cleaned_pos_command += '"' + move_str + '",'
+                        position_details += "<<<MOVES>>> " + cleaned_pos_command
+
+                        with open('games_played.txt', 'a') as file:
+                            # write the text to the file
+                            file.write(position_details)
+
+                    # print the results to the screen and record the result
                     sys.stdout.write("Game over. ")
                     if game_state == board.STATE_WHITE_WIN:
                         sys.stdout.write("White Wins!\n")
@@ -290,5 +316,7 @@ class MatchManager:
                 is_white_turn = not is_white_turn
 
         finally:
+
+            # close the engines
             engine_1.close()
             engine_2.close()
