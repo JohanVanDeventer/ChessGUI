@@ -26,19 +26,16 @@ class Board:
 
     def get_game_state(self):
 
-        if not self.board.is_game_over():
+        if self.board.is_game_over(claim_draw=True):
 
-            # special rule: 3-fold repetition must be claimed, which we assume is done
-            # therefore if it can't be claimed, then the game is still ongoing
-            if self.board.can_claim_threefold_repetition():
-                return STATE_3_FOLD_REPETITION
-
-        else:
             if self.board.is_checkmate():
                 if self.board.turn:
                     return STATE_BLACK_WIN
                 else:
                     return STATE_WHITE_WIN
+
+            if self.board.can_claim_threefold_repetition():
+                return STATE_3_FOLD_REPETITION
 
             if self.board.is_stalemate():
                 return STATE_STALEMATE
@@ -50,5 +47,3 @@ class Board:
                 return STATE_50_MOVE_DRAW
 
         return STATE_ONGOING
-
-

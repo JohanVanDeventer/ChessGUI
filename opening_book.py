@@ -3,157 +3,6 @@
 # or contains a fen string from which the engines need to play on from
 opening_book = []
 
-# ------------------------------------- VARIOUS ENDGAMES ------------------------------------
-
-# custom position
-move_sequence = []
-move_sequence_name = "White to play and win in endgame"
-fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "White to play and draw in endgame"
-fen = "7K/8/k1P5/7p/8/8/8/8 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "White to play and win in difficult endgame"
-fen = "8/5k1p/1p1pRp2/p2P4/P1P3Pp/1P4bP/6K1/8 w - - 0 49"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "King vs King and Rook"
-fen = "8/8/4k3/8/8/8/8/2KR4 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "White to play and win in endgame"
-fen = "4k3/8/8/8/8/8/3P4/3K4 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Black to hold draw in endgame"
-fen = "8/3k4/8/8/8/8/3P4/3K4 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "King, Bishop and Knight Checkmate"
-fen = "8/3k4/8/8/8/2BNK3/8/8 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "King and Two Bishops Checkmate"
-fen = "8/4k3/8/8/3K4/3BB3/8/8 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "K+Q vs K+P: Winning for White"
-fen = "K7/2Q5/8/8/8/8/4p3/5k2 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "K+Q vs K+P: Black to hold draw"
-fen = "8/2K5/8/4Q3/8/8/5p2/6k1 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "White to put Black in Zugzwang"
-fen = "8/4kb1p/2p3pP/1pP1P1P1/1P3K2/1B6/8/8 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Black to hold the draw"
-fen = "8/2k1b3/2P5/3KP2B/8/8/8/8 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Lucena 1: White to play and win"
-fen = "4K3/4P1k1/8/8/8/8/r7/5R2 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Lucena 2: White to play and win"
-fen = "K7/P4k2/8/8/8/8/1r6/4R3 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "R vs BPP: White to hold the draw"
-fen = "4R3/8/3b4/3k4/3pp3/8/4K3/8 w - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Philidor Position: White to hold draw"
-fen = "8/8/8/8/4pk2/R7/7r/8 b - - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# ------------------------------------- VARIOUS MIDDLE GAMES ------------------------------------
-
-# custom position
-move_sequence = []
-move_sequence_name = "Kiwipete"
-fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Poisoned Pawn: White to play to win"
-fen = "2r1kr2/6p1/pp2Pn1p/3p1P1N/2pP3P/P4R2/1P4K1/5R2 w - - 0 37"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Rook f3: White to play and win"
-fen = "2rr2k1/2q1bpp1/p3p3/1pn1P3/3N1BQ1/1PP5/P5PP/3R1R1K w - - 0 23"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Rook takes Knight for long term advantage"
-fen = "r1b2r2/p5kp/1p1q1p2/4nP2/3p1N2/3B4/P2Q2PP/4RRK1 w - - 0 21"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
-# custom position
-move_sequence = []
-move_sequence_name = "Sacrifice material by white to win"
-fen = "4rr1k/2q2pp1/p1NRp1b1/1pn1P3/5Q1P/2P1PB2/P7/5RK1 w - - 0 25"
-move_tuple = (move_sequence, move_sequence_name, fen)
-opening_book.append(move_tuple)
-
 # ------------------------------------- VARIOUS OPENINGS ------------------------------------
 
 # blank match (engine play anything)
@@ -573,5 +422,149 @@ opening_book.append(move_tuple)
 move_sequence = ["g2g3"]
 move_sequence_name = "g3 Game"
 fen = "startpos"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# ------------------------------------- VARIOUS ENDGAMES ------------------------------------
+
+# custom position
+move_sequence = []
+move_sequence_name = "White to play and win in endgame"
+fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "White to play and draw in endgame"
+fen = "7K/8/k1P5/7p/8/8/8/8 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "White to play and win in difficult endgame"
+fen = "8/5k1p/1p1pRp2/p2P4/P1P3Pp/1P4bP/6K1/8 w - - 0 49"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "King vs King and Rook"
+fen = "8/8/4k3/8/8/8/8/2KR4 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "White to play and win in endgame"
+fen = "4k3/8/8/8/8/8/3P4/3K4 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Black to hold draw in endgame"
+fen = "8/3k4/8/8/8/8/3P4/3K4 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "King, Bishop and Knight Checkmate"
+fen = "8/3k4/8/8/8/2BNK3/8/8 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "King and Two Bishops Checkmate"
+fen = "8/4k3/8/8/3K4/3BB3/8/8 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "K+Q vs K+P: Winning for White"
+fen = "K7/2Q5/8/8/8/8/4p3/5k2 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "K+Q vs K+P: Black to hold draw"
+fen = "8/2K5/8/4Q3/8/8/5p2/6k1 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "White to put Black in Zugzwang"
+fen = "8/4kb1p/2p3pP/1pP1P1P1/1P3K2/1B6/8/8 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Black to hold the draw"
+fen = "8/2k1b3/2P5/3KP2B/8/8/8/8 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Lucena 1: White to play and win"
+fen = "4K3/4P1k1/8/8/8/8/r7/5R2 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Lucena 2: White to play and win"
+fen = "K7/P4k2/8/8/8/8/1r6/4R3 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "R vs BPP: White to hold the draw"
+fen = "4R3/8/3b4/3k4/3pp3/8/4K3/8 w - - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# ------------------------------------- VARIOUS MIDDLE GAMES ------------------------------------
+
+# custom position
+move_sequence = []
+move_sequence_name = "Kiwipete"
+fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Poisoned Pawn: White to play to win"
+fen = "2r1kr2/6p1/pp2Pn1p/3p1P1N/2pP3P/P4R2/1P4K1/5R2 w - - 0 37"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Rook f3: White to play and win"
+fen = "2rr2k1/2q1bpp1/p3p3/1pn1P3/3N1BQ1/1PP5/P5PP/3R1R1K w - - 0 23"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Rook takes Knight for long term advantage"
+fen = "r1b2r2/p5kp/1p1q1p2/4nP2/3p1N2/3B4/P2Q2PP/4RRK1 w - - 0 21"
+move_tuple = (move_sequence, move_sequence_name, fen)
+opening_book.append(move_tuple)
+
+# custom position
+move_sequence = []
+move_sequence_name = "Sacrifice material by white to win"
+fen = "4rr1k/2q2pp1/p1NRp1b1/1pn1P3/5Q1P/2P1PB2/P7/5RK1 w - - 0 25"
 move_tuple = (move_sequence, move_sequence_name, fen)
 opening_book.append(move_tuple)

@@ -137,10 +137,10 @@ class GUI:
                                    BOARD_START_Y + (row * TILE_HEIGHT) + PIECE_Y_OFFSET))
 
         # display the time for each side
-        white_img = self.font.render(f'Time: {round(white_time/1000, 2)}', False, (0, 0, 0)).convert_alpha()
-        black_img = self.font.render(f'Time: {round(black_time/1000, 2)}', False, (0, 0, 0)).convert_alpha()
-        self.win.blit(white_img, (BOARD_START_X + TILE_WIDTH * 6 + (TILE_WIDTH / 2), BOARD_START_Y - TEXT_Y_OFFSET))
-        self.win.blit(black_img, (BOARD_START_X + TILE_WIDTH * 6 + (TILE_WIDTH / 2), BOARD_START_Y + (TILE_HEIGHT * 8)))
+        black_img = self.font.render(f'Time: {round(black_time / 1000, 2)}', False, (0, 0, 0)).convert_alpha()
+        white_img = self.font.render(f'Time: {round(white_time / 1000, 2)}', False, (0, 0, 0)).convert_alpha()
+        self.win.blit(black_img, (BOARD_START_X + TILE_WIDTH * 6 + (TILE_WIDTH / 2), BOARD_START_Y - TEXT_Y_OFFSET))
+        self.win.blit(white_img, (BOARD_START_X + TILE_WIDTH * 6 + (TILE_WIDTH / 2), BOARD_START_Y + (TILE_HEIGHT * 8)))
 
         # display engine info
         engine_1_img = self.font.render(f'Engine 1', False, (0, 0, 0)).convert_alpha()

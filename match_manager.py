@@ -183,7 +183,7 @@ class MatchManager:
                 return True
             sys.stdout.write("Engine 2 readyok.\n")
 
-            # ----------------------------- LAST BEFORE LOOP -------------------------------
+            # ----------------------------- UPDATE THE GUI -------------------------------
             self.gui.display_board(game_board, white_time, black_time, board.STATE_ONGOING, engine_1_is_white,
                                    self.engine_1_wins, self.engine_2_wins, self.draws, opening_name)
 
