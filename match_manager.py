@@ -58,20 +58,13 @@ class MatchManager:
                         if engine_1_side == 1:
                             engine_1_is_white = False
 
-                        sys.stdout.write("********** Stating New Game **********\n")
-                        print(f"Opening Sequence: {opening_sequence_tuple}")
-                        if engine_1_is_white:
-                            sys.stdout.write("Engine 1 is white. Engine 2 is black.")
-                        else:
-                            sys.stdout.write("Engine 2 is white. Engine 1 is black.")
-
                         match_terminated = self.start_game(opening_sequence_tuple, engine_1_is_white)
 
         # when the match is over or terminated, save the results if at least 1 game was played
         if self.games_finished > 0:
 
             match_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            engine_1_score = round(((self.engine_1_wins + (self.draws/2))/self.games_finished * 100), 2)
+            engine_1_score = round(((self.engine_1_wins + (self.draws / 2)) / self.games_finished * 100), 2)
             engine_2_score = round(((self.engine_2_wins + (self.draws / 2)) / self.games_finished * 100), 2)
 
             result = f'{match_time}: ' \
@@ -85,6 +78,9 @@ class MatchManager:
                 # write the text to the file
                 file.write(result)
 
+        # finally return whether the match was terminated or not
+        return match_terminated
+
     # ----------------------------------- START GAME ------------------------------------
     # start a new game between the engines
     def start_game(self, opening_sequence_tuple, engine_1_is_white):
@@ -93,7 +89,6 @@ class MatchManager:
         # start each engine from fresh
         engine_1 = engine.Engine(self.engine_1_path)
         engine_2 = engine.Engine(self.engine_2_path)
-        sys.stdout.write(" Started Engines. \n")
 
         try:
 
@@ -143,9 +138,8 @@ class MatchManager:
             if engine_1_output == "uciok":
                 engine_1_ok = True
             if not engine_1_ok:
-                print("Engine 1 did not respond to uci. Aborting the match.")
+                print("<< ERROR >> Engine 1 did not respond to uci. Aborting the match.")
                 return True
-            sys.stdout.write("Engine 1 uciok. ")
 
             engine_2.send_input("uci\n")
             _ = engine_2.receive_output()  # the id of the engine is not used
@@ -155,9 +149,8 @@ class MatchManager:
             if engine_2_output == "uciok":
                 engine_2_ok = True
             if not engine_2_ok:
-                print("Engine 2 did not respond to uci. Aborting the match.")
+                print("<< ERROR >> Engine 2 did not respond to uci. Aborting the match.")
                 return True
-            sys.stdout.write("Engine 2 uciok. ")
 
             # ----------------------------- UCI NEW GAME -------------------------------
             # send ucinewgame command and check whether is ready
@@ -168,9 +161,8 @@ class MatchManager:
             if engine_1_output == "readyok":
                 engine_1_ok = True
             if not engine_1_ok:
-                print("Engine 1 did not respond to ucinewgame and isready. Aborting the match.")
+                print("<< ERROR >> Engine 1 did not respond to ucinewgame and isready. Aborting the match.")
                 return True
-            sys.stdout.write("Engine 1 readyok. ")
 
             engine_2.send_input("ucinewgame\n", is_flush=False)
             engine_2.send_input("isready\n")
@@ -179,9 +171,8 @@ class MatchManager:
             if engine_2_output == "readyok":
                 engine_2_ok = True
             if not engine_2_ok:
-                print("Engine 2 did not respond to ucinewgame and isready. Aborting the match.")
+                print("<< ERROR >> Engine 2 did not respond to ucinewgame and isready. Aborting the match.")
                 return True
-            sys.stdout.write("Engine 2 readyok.\n")
 
             # ----------------------------- UPDATE THE GUI -------------------------------
             self.gui.display_board(game_board, white_time, black_time, board.STATE_ONGOING, engine_1_is_white,
@@ -227,7 +218,7 @@ class MatchManager:
 
                 # check for time fails
                 if white_time <= 0:
-                    print("Game over. White lost on time")
+                    print("<< RESULT >> White lost on time!")
                     if engine_1_is_white:
                         self.engine_2_wins += 1
                     else:
@@ -236,7 +227,7 @@ class MatchManager:
                     return False
 
                 if black_time <= 0:
-                    print("Game over. Black lost on time")
+                    print("<< RESULT >> Black lost on time!")
                     if engine_1_is_white:
                         self.engine_1_wins += 1
                     else:
@@ -262,6 +253,7 @@ class MatchManager:
                     with open('results.txt', 'a') as file:
                         # Write the text to the file
                         file.write(error_message)
+                    print("<< ERROR >> Illegal UCI move received. Aborting the match.")
                     return True
 
                 # play the move on the board
@@ -288,34 +280,38 @@ class MatchManager:
                         final_fen = game_board.board.fen()
 
                         position_details = "---------------------------------------------------\n" +\
-                            "<<<TIME>>> " + game_time + ".\n" +\
-                            "<<<FEN>>> " + final_fen + ".\n"
+                            "<<< TIME >>> " + game_time + ".\n" +\
+                            "<<< FEN >>> " + final_fen + ".\n"
 
                         split_pos_command = position_command.split(sep=" ")
                         cleaned_pos_command = ""
                         for i, move_str in enumerate(split_pos_command):
                             if i > 2:
                                 cleaned_pos_command += '"' + move_str + '",'
-                        position_details += "<<<MOVES>>> " + cleaned_pos_command + "\n"
+                        position_details += "<<< MOVES >>> " + cleaned_pos_command + "\n"
 
                         with open('games_played.txt', 'a') as file:
                             # write the text to the file
                             file.write(position_details)
 
                     # print the results to the screen and record the result
-                    sys.stdout.write("Game over. ")
+                    sys.stdout.write("<< RESULT >> ")
                     if game_state == board.STATE_WHITE_WIN:
-                        sys.stdout.write("White Wins!\n")
                         if engine_1_is_white:
                             self.engine_1_wins += 1
+                            sys.stdout.write("Engine 1 Wins! (White)\n")
                         else:
                             self.engine_2_wins += 1
+                            sys.stdout.write("Engine 2 Wins! (White)\n")
+
                     elif game_state == board.STATE_BLACK_WIN:
-                        sys.stdout.write("Black Wins!\n")
                         if engine_1_is_white:
                             self.engine_2_wins += 1
+                            sys.stdout.write("Engine 2 Wins! (Black)\n")
                         else:
                             self.engine_1_wins += 1
+                            sys.stdout.write("Engine 1 Wins! (Black)\n")
+
                     else:
                         sys.stdout.write("Draw.\n")
                         self.draws += 1
